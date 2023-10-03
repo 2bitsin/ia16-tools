@@ -1,12 +1,15 @@
 FROM ubuntu:latest
-WORKDIR /home/setup
+ENV DISPLAY=host.docker.internal:0.0 DEBIAN_FRONTEND=noninteractive
+RUN useradd -ms /bin/bash setup
 RUN apt update 
 RUN apt upgrade -y
-RUN apt install -y wget
-RUN wget https://bugs.launchpad.net/ubuntu/+source/dosemu/+bug/1975420/+attachment/5607345/+files/dosemu_1.4.0+svn.2080-1_amd64.deb -O dosemu.deb
-RUN apt install -y $(dpkg-deb -f dosemu.deb Depends | sed 's/([^)]*)//g' | sed 's/,//g')
-RUN dpkg -i dosemu.deb
-RUN apt install -y dosbox gcc-multilib g++-multilib build-essential binutils make autoconf bison flex texinfo git wget libncurses-dev dos2unix
+RUN apt install -y software-properties-common keyboard-configuration
+#RUN add-apt-repository ppa:dosemu2/ppa
+#RUN apt update
+#RUN apt install -y dosemu2
+RUN apt install -y wget dosbox gcc-multilib g++-multilib build-essential binutils make autoconf bison flex texinfo git wget libncurses-dev dos2unix
+USER setup
+WORKDIR /home/setup
 RUN git clone --recursive https://gitlab.com/tkchia/build-ia16.git
 WORKDIR /home/setup/build-ia16
 RUN ./fetch.sh 
@@ -19,7 +22,13 @@ RUN ./build.sh newlib
 RUN ./build.sh causeway
 RUN ./build.sh elks-libc
 RUN ./build.sh elf2elks
-ENV DISPLAY=host.docker.internal:0.0
-#RUN ./build.sh libi86 || true
+RUN ./build.sh libi86
+RUN ./build.sh gcc2
+RUN ./build.sh extra
+RUN ./build.sh sim
+USER root
+RUN apt install -y dejagnu autogen
+USER setup
+RUN ./build.sh test
 
 
