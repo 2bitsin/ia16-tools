@@ -26,6 +26,5 @@ RUN ./build.sh libi86
 RUN ./build.sh gcc2
 RUN ./build.sh extra
 RUN ./build.sh sim
-RUN ./build.sh test
 
 
