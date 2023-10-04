@@ -27,4 +27,10 @@ RUN ./build.sh gcc2
 RUN ./build.sh extra
 RUN ./build.sh sim
 USER root
-
+RUN mv /home/setup/build-ia16/prefix /opt/ia16-elf-gcc
+RUN rm -rf /home/setup/*
+RUN apt install -y tilde mc nano
+USER setup
+RUN echo 'export PATH=/opt/ia16-elf-gcc/bin:$PATH' >> ~/.bashrc 
+RUN export PATH=/opt/ia16-elf-gcc/bin:$PATH
+CMD ["/bin/bash"]
