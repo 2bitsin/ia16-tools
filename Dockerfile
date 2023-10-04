@@ -7,7 +7,7 @@ RUN apt install -y software-properties-common keyboard-configuration
 #RUN add-apt-repository ppa:dosemu2/ppa
 #RUN apt update
 #RUN apt install -y dosemu2
-RUN apt install -y wget dosbox gcc-multilib g++-multilib build-essential binutils make autoconf bison flex texinfo git wget libncurses-dev dos2unix dejagnu autogen 
+RUN apt install -y wget sudo dosbox gcc-multilib g++-multilib build-essential binutils make autoconf bison flex texinfo git wget libncurses-dev dos2unix dejagnu autogen 
 USER setup
 WORKDIR /home/setup
 RUN git clone --recursive https://gitlab.com/tkchia/build-ia16.git
@@ -26,5 +26,5 @@ RUN ./build.sh libi86
 RUN ./build.sh gcc2
 RUN ./build.sh extra
 RUN ./build.sh sim
-
+USER root
 
