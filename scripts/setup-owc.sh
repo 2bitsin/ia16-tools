@@ -7,3 +7,4 @@ xterm -e './open-watcom-2_0-c-linux-x64 -s -i -dFullInstall=true'
 echo 'export PATH=/usr/bin/watcom/binl64:$PATH' >> ~/.bashrc
 export PATH=/usr/bin/watcom/binl64:$PATH
 popd
+rm -rf /install/watcom

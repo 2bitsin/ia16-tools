@@ -1,3 +1,4 @@
+#!/bin/bash
 mkdir -p /install/ia16-elf-gcc
 pushd /install/ia16-elf-gcc
 git clone --recursive https://gitlab.com/tkchia/build-ia16.git
@@ -21,3 +22,4 @@ echo 'export PATH=/usr/bin/ia16-elf-gcc/bin:$PATH' >> ~/.bashrc
 export PATH=/usr/bin/ia16-elf-gcc/bin:$PATH
 popd
 popd
+rm -rf /install/ia16-elf-gcc
